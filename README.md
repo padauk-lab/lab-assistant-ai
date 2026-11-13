@@ -46,20 +46,40 @@ Example endpoints: `GET /students/{id}`, `POST /progress`, `GET /equipment?name=
 - Secrets (passwords, API keys) are never committed. They live in `.env`, which is in `.gitignore`
 - The ebook library only stores files for open-access papers, our own documents and free books. Paywalled items are saved as links only
 
+## Repo structure
+
+| Folder | What | Owner |
+|--------|------|-------|
+| `docs/` | Project brief, table definitions, API list, images | Project manager |
+| `db/` | Schema, migrations, fake seed data | Data group |
+| `backend/` | The API server | Data group |
+| `frontend/` | Pages and chat box UI | Data group |
+| `rag/` | Ingest, embed, search | AI group |
+| `llm/` | Chat agent, tools, prompts | AI group |
+| `digest/` | Monday email job | AI group |
+| `qa/` | AI answer suggestions for the Q&A board | AI group |
+| `library/` | Google Drive helpers for the ebook library | AI group |
+| `scripts/` | One-off jobs | Script author |
+| `reports/` | Progress reports | Everyone |
+
+New here? Read [`docs/PROJECT_BRIEF.md`](docs/PROJECT_BRIEF.md), then the newest file in [`reports/`](reports/). Coding tools pick up the same context automatically from `AGENTS.md` and `CLAUDE.md`.
+
 ## Roadmap
 
-- [ ] Week 1: agree on tables and the API list, repo setup, start data collection and consent
-- [ ] Week 2: each part works alone with fake data
-- [ ] Week 3: connect the parts (chat uses the real API and RAG, frontend uses the real API)
-- [ ] Week 4: real data in, 20 to 30 test questions, test Monday email
-- [ ] Week 5: launch in the lab, first real Monday email, collect feedback
+- [ ] Phase 1: agree on tables and the API list, repo setup, start data collection and consent
+- [ ] Phase 2: each part works alone with fake data
+- [ ] Phase 3: connect the parts (chat uses the real API and RAG, frontend uses the real API)
+- [ ] Phase 4: real data in, 20 to 30 test questions, test Monday email
+- [ ] Phase 5: launch in the lab, first real Monday email, collect feedback
+
+Dated progress lives in [`reports/`](reports/).
 
 ## How we work
 
 - Every change goes through a pull request into `main`, no direct pushes
 - At least one approval is needed to merge, and pushing new commits after approval resets the approval
 - Small pull requests, reviews within 1 to 2 days
-- 30-minute weekly meeting with demos, and a weekly progress report in this repo
+- 30-minute weekly meeting with demos, and a progress report in `reports/` after each big piece of work
 
 ## Team
 
