@@ -1,8 +1,8 @@
 # db/
 
-Database schema and data for Neon Postgres (with pgvector).
+Database schema and data for our database (starting choice: Neon Postgres with pgvector).
 
-**Owner:** Data group (ANK, TDS)
+**Owner:** Infrastructure & System Engineering (ANK, TDS, KZN)
 
 ## What goes here
 

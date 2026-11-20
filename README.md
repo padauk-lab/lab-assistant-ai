@@ -18,7 +18,10 @@ An AI lab assistant for our IoMT lab at iU (11 students and 1 professor). Built 
 | 6 | Q&A board | Students post questions (professor only or everyone), classmates answer, the AI can suggest answers |
 | 7 | Ebook library | Book and paper info in the database, files in a shared Google Drive folder |
 
-## Tech stack (all free)
+## Tech stack (starting choices, all free)
+
+These are where we start, not fixed rules. If someone finds a better free option, propose it in a PR.
+
 
 - Database: Neon Postgres with pgvector (for RAG)
 - LLM: Ollama, an open model running locally (used for anything with student data)
@@ -29,10 +32,10 @@ An AI lab assistant for our IoMT lab at iU (11 students and 1 professor). Built 
 
 ## Architecture
 
-The project has two groups that connect only through a shared API list.
+The project has two teams that connect only through a shared API list.
 
-- AI group: RAG, LLM chat box, Monday email, ebook library, Q&A board
-- Data group: student database, equipment database, backend, frontend
+- Agent Engineering: RAG, LLM chat box, Monday email, ebook library, Q&A board
+- Infrastructure & System Engineering: student database, equipment database, backend, frontend
 
 Example endpoints: `GET /students/{id}`, `POST /progress`, `GET /equipment?name=`, `POST /questions`, `POST /chat`. Any change to the API list goes through the project manager.
 
@@ -51,14 +54,14 @@ Example endpoints: `GET /students/{id}`, `POST /progress`, `GET /equipment?name=
 | Folder | What | Owner |
 |--------|------|-------|
 | `docs/` | Project brief, table definitions, API list, images | Project manager |
-| `db/` | Schema, migrations, fake seed data | Data group |
-| `backend/` | The API server | Data group |
-| `frontend/` | Pages and chat box UI | Data group |
-| `rag/` | Ingest, embed, search | AI group |
-| `llm/` | Chat agent, tools, prompts | AI group |
-| `digest/` | Monday email job | AI group |
-| `qa/` | AI answer suggestions for the Q&A board | AI group |
-| `library/` | Google Drive helpers for the ebook library | AI group |
+| `db/` | Schema, migrations, fake seed data | Infrastructure & System Engineering |
+| `backend/` | The API server | Infrastructure & System Engineering |
+| `frontend/` | Pages and chat box UI | Infrastructure & System Engineering |
+| `rag/` | Ingest, embed, search | Agent Engineering |
+| `llm/` | Chat agent, tools, prompts | Agent Engineering |
+| `digest/` | Monday email job | Agent Engineering |
+| `qa/` | AI answer suggestions for the Q&A board | Agent Engineering |
+| `library/` | Google Drive helpers for the ebook library | Agent Engineering |
 | `scripts/` | One-off jobs | Script author |
 | `reports/` | Progress reports | Everyone |
 
@@ -86,5 +89,5 @@ Dated progress lives in [`reports/`](reports/).
 | Role | Members |
 |------|---------|
 | Project manager | Htet Pai |
-| AI group | LMHP, SWYG, KZN |
-| Data group | ANK, TDS |
+| Agent Engineering | LMHP, SWYH |
+| Infrastructure & System Engineering | ANK, TDS, KZN |

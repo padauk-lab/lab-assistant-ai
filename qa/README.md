@@ -2,7 +2,7 @@
 
 AI logic for the Q&A board: suggesting answers to student questions using RAG.
 
-**Owner:** AI group (LMHP, SWYG, KZN)
+**Owner:** Agent Engineering (LMHP, SWYH)
 
 ## What goes here
 

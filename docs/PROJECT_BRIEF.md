@@ -24,6 +24,8 @@ Dropped for now (do not re-add): paper finder, senior handover and future-studen
 
 ## 3. System structure
 
+Tool names in the diagram are the starting choices (see section 7).
+
 ```
                  +------------------+
   students  ---> |    frontend/     |  (Streamlit pages + chat box)
@@ -51,14 +53,14 @@ Rule: nothing except `backend/` (and `rag/` for its own vector tables) talks to 
 | Folder | What | Owner |
 |--------|------|-------|
 | `docs/` | Table definitions, API list, consent message, images | Htet Pai |
-| `db/` | Schema, migrations, fake seed data, backups | Data group |
-| `backend/` | The API server | Data group |
-| `frontend/` | Pages and chat box UI | Data group, Htet Pai helps |
-| `rag/` | Ingest, embed, search | AI group |
-| `llm/` | Chat agent, tools, prompts, pseudonymize | AI group |
-| `digest/` | Monday email job | AI group |
-| `qa/` | AI answer suggestions for the Q&A board | AI group |
-| `library/` | Google Drive helpers for the ebook library | AI group |
+| `db/` | Schema, migrations, fake seed data, backups | Infrastructure & System Engineering |
+| `backend/` | The API server | Infrastructure & System Engineering |
+| `frontend/` | Pages and chat box UI | Infrastructure & System Engineering, Htet Pai helps |
+| `rag/` | Ingest, embed, search | Agent Engineering |
+| `llm/` | Chat agent, tools, prompts, pseudonymize | Agent Engineering |
+| `digest/` | Monday email job | Agent Engineering |
+| `qa/` | AI answer suggestions for the Q&A board | Agent Engineering |
+| `library/` | Google Drive helpers for the ebook library | Agent Engineering |
 | `scripts/` | One-off jobs (equipment spreadsheet import) | Whoever writes it |
 | `reports/` | Progress reports after each big piece of work | Everyone |
 
@@ -66,29 +68,31 @@ Each folder has its own README saying what goes there.
 
 ## 5. Team and work allocation
 
-- **AI group (LMHP, SWYG, KZN):** RAG, LLM chat box, Monday email, ebook library, Q&A box
-- **Data group (ANK, TDS):** student DB, equipment DB, backend, frontend
-- **Htet Pai (project manager):** manages both groups, helps with frontend and backend side pieces (not the critical path), reviews both groups, owns the API list, handles professor communication and consent
+- **Agent Engineering (LMHP, SWYH):** the assistant's intelligence: RAG, LLM chat and its tools, Monday email, ebook library, Q&A answer suggestions
+- **Infrastructure & System Engineering (ANK, TDS, KZN):** everything the assistant runs on and everything users see: the Postgres + pgvector database, the API the agent uses as its tools, access control, backups and the frontend
+- **Htet Pai (project manager):** manages both teams, helps with frontend and backend side pieces (not the critical path), reviews both teams, owns the API list, handles professor communication and consent
 
-The two groups connect only through the API list (for example `GET /students/{id}`, `POST /progress`, `GET /equipment?name=`, `POST /questions`, `POST /chat`). Any change to it goes through Htet Pai.
+The two teams connect only through the API list (for example `GET /students/{id}`, `POST /progress`, `GET /equipment?name=`, `POST /questions`, `POST /chat`). Any change to it goes through Htet Pai.
 
 ## 6. Privacy rules (non-negotiable)
 
 - Opt-in only. The professor asks for consent, and the consent message states what is stored and that a Monday digest goes to the professor
 - Students see only their own data, the professor sees all
-- Free LLM API tiers may use our data, so anything with student data runs on the local model (Ollama), or is pseudonymized (S01, S02 and so on) before calling a free API. Guideline and timetable text is fine to send
+- Free LLM API tiers may use our data, so anything with student data runs on a local model (currently Ollama), or is pseudonymized (S01, S02 and so on) before calling a free API. Guideline and timetable text is fine to send
 - Secrets (email password, keys) never go in GitHub. Use `.env` (already in `.gitignore`) and list variable names in `.env.example`
 - Regular database backups
-- Never commit real student data, not even in tests. Use fake data in `db/seed/`
+- Real student data lives only in the live database, never in the repo. The repo is public, so code, tests and examples use fake data from `db/seed/`
 
-## 7. Free stack
+## 7. Free stack (starting choices)
 
-Neon Postgres (with pgvector), Gmail API or SMTP, cron on an always-on PC or a GitHub Actions schedule, Ollama, Google Drive, Streamlit or a simple web app. Nothing paid, no Terraform.
+Neon Postgres (with pgvector), Gmail API or SMTP, cron on an always-on PC or a GitHub Actions schedule, Ollama, Google Drive, Streamlit or a simple web app. Nothing paid.
+
+These are where we start, not fixed rules. Better tool? Propose it. Any tool can be swapped if it is free, keeps student data private, and does not break the API contract. Write a short note in your PR on why, and agree with the project manager if it affects the other team.
 
 ## 8. Way of working
 
 - Every change goes through a pull request into `main`. At least 1 approval is needed, and pushing new commits after approval resets the approval
-- Small pull requests, reviews within 1 to 2 days, cross-group code review weekly
+- Small pull requests, reviews within 1 to 2 days, cross-team code review weekly
 - Fixed owners per task plus weekly goals, 30-minute weekly meeting with demos
 - After each big piece of work, add a progress report to `reports/`
 

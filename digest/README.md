@@ -2,7 +2,7 @@
 
 The Monday email: a weekly progress digest sent ONLY to the professor. (Named `digest`, not `email`, so it does not clash with Python's built-in `email` module.)
 
-**Owner:** AI group (LMHP, SWYG, KZN)
+**Owner:** Agent Engineering (LMHP, SWYH)
 
 ## What goes here
 
