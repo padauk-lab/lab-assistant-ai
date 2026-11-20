@@ -1,0 +1,59 @@
+# Local development: `docker compose up --build`
+# Backend:  http://localhost:8000/docs
+# Frontend: http://localhost:8501
+# Ollama runs on your own machine (not in Docker) so it can use your GPU.
+
+services:
+  db:
+    image: pgvector/pgvector:pg17
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-lab}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-lab_local_only}
+      POSTGRES_DB: ${POSTGRES_DB:-lab_assistant}
+    ports:
+      - "127.0.0.1:5432:5432"
+    volumes:
+      - db_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $${POSTGRES_USER} -d $${POSTGRES_DB}"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+
+  backend:
+    build:
+      context: .
+      dockerfile: backend/Dockerfile
+    env_file:
+      - path: .env
+        required: false
+    environment:
+      DATABASE_URL: postgresql://${POSTGRES_USER:-lab}:${POSTGRES_PASSWORD:-lab_local_only}@db:5432/${POSTGRES_DB:-lab_assistant}
+      OLLAMA_HOST: http://host.docker.internal:11434
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    ports:
+      - "127.0.0.1:8000:8000"
+    depends_on:
+      db:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8000/health')"]
+      interval: 10s
+      timeout: 3s
+      retries: 5
+
+  frontend:
+    build:
+      context: .
+      dockerfile: frontend/Dockerfile
+    environment:
+      API_URL: http://backend:8000
+    ports:
+      - "127.0.0.1:8501:8501"
+    depends_on:
+      backend:
+        condition: service_healthy
+
+volumes:
+  db_data:

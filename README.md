@@ -1,8 +1,10 @@
 # Lab Assistant AI
 
-An AI lab assistant for our IoMT lab at iU (11 students and 1 professor). Built by beginners, with free tools only, under [Padauk Lab](https://github.com/padauk-lab).
+[![CI](https://github.com/padauk-lab/lab-assistant-ai/actions/workflows/ci.yml/badge.svg)](https://github.com/padauk-lab/lab-assistant-ai/actions/workflows/ci.yml)
 
-> Status: Week 1 (design and setup). Screenshots and a demo will be added here once the system is running.
+An AI lab assistant for our IoMT lab at iU (11 students and 1 professor). Built by a student team with free tools and an industry-style workflow, under [Padauk Lab](https://github.com/padauk-lab).
+
+> Status: Phase 1 (design and setup). Screenshots and a demo will be added here once the system is running.
 
 <!-- Screenshots go here later, for example: ![Chat box](docs/images/chat.png) -->
 
@@ -22,13 +24,33 @@ An AI lab assistant for our IoMT lab at iU (11 students and 1 professor). Built 
 
 These are where we start, not fixed rules. If someone finds a better free option, propose it in a PR.
 
-
-- Database: Neon Postgres with pgvector (for RAG)
+- Language: Python 3.12, dependencies managed with [uv](https://docs.astral.sh/uv/)
+- Backend: FastAPI
+- Database: Postgres with pgvector (for RAG). Local Postgres in Docker for development, Neon for the hosted database
 - LLM: Ollama, an open model running locally (used for anything with student data)
 - Email: Gmail API or SMTP
 - Scheduler: cron on an always-on PC or a GitHub Actions schedule
 - Files: Google Drive
-- Frontend: Streamlit or a simple web app
+- Frontend: Streamlit
+- Dev environment: Docker Compose (Ollama runs on the host so it can use the GPU)
+- Quality: ruff (lint and format), pytest, pre-commit hooks, gitleaks (secret scanning)
+- CI: GitHub Actions runs lint, tests and a Docker build on every pull request
+
+## Quick start
+
+```bash
+git clone https://github.com/padauk-lab/lab-assistant-ai.git
+cd lab-assistant-ai
+cp .env.example .env            # fill in your own values
+uv sync                         # install Python dependencies
+uv run pre-commit install       # turn on the commit checks
+docker compose up --build       # start the whole system
+```
+
+- Backend API docs: http://localhost:8000/docs
+- Frontend: http://localhost:8501
+
+First time? Follow [`docs/SETUP.md`](docs/SETUP.md) for installing Docker, uv and Ollama.
 
 ## Architecture
 
@@ -80,7 +102,9 @@ Dated progress lives in [`reports/`](reports/).
 ## How we work
 
 - Every change goes through a pull request into `main`, no direct pushes
-- At least one approval is needed to merge, and pushing new commits after approval resets the approval
+- A pull request merges only when CI is green and at least one reviewer approves. New commits after approval reset the approval
+- Every feature comes with tests
+- Full rules: [`CONTRIBUTING.md`](CONTRIBUTING.md)
 - Small pull requests, reviews within 1 to 2 days
 - 30-minute weekly meeting with demos, and a progress report in `reports/` after each big piece of work
 

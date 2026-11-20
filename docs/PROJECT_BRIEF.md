@@ -85,13 +85,23 @@ The two teams connect only through the API list (for example `GET /students/{id}
 
 ## 7. Free stack (starting choices)
 
-Neon Postgres (with pgvector), Gmail API or SMTP, cron on an always-on PC or a GitHub Actions schedule, Ollama, Google Drive, Streamlit or a simple web app. Nothing paid.
+- Python 3.12 with uv (dependencies locked in `uv.lock`), FastAPI, Streamlit
+- Postgres + pgvector: local in Docker for development, Neon for hosting
+- Ollama for the local LLM, running on the host machine (not in Docker) so it can use the GPU
+- Gmail API or SMTP, cron or a GitHub Actions schedule, Google Drive
+- Docker Compose for the local environment, GitHub Actions for CI
+- Nothing paid
 
 These are where we start, not fixed rules. Better tool? Propose it. Any tool can be swapped if it is free, keeps student data private, and does not break the API contract. Write a short note in your PR on why, and agree with the project manager if it affects the other team.
 
 ## 8. Way of working
 
-- Every change goes through a pull request into `main`. At least 1 approval is needed, and pushing new commits after approval resets the approval
+We work like an industry engineering team. Full rules are in `CONTRIBUTING.md`.
+
+- Every change goes through a pull request into `main`. It merges only when CI is green and at least 1 reviewer approves. New commits after approval reset the approval
+- CI runs on every pull request: pre-commit checks (ruff lint and format, gitleaks secret scan), pytest, and a Docker build with a health check
+- pre-commit runs the same checks on your laptop before each commit, so problems are caught before they reach GitHub
+- Every feature comes with tests
 - Small pull requests, reviews within 1 to 2 days, cross-team code review weekly
 - Fixed owners per task plus weekly goals, 30-minute weekly meeting with demos
 - After each big piece of work, add a progress report to `reports/`

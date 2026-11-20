@@ -1,0 +1,43 @@
+[project]
+name = "lab-assistant-ai"
+version = "0.1.0"
+description = "AI lab assistant for our IoMT lab"
+readme = "README.md"
+requires-python = ">=3.12,<3.13"
+dependencies = []
+
+# Each area installs only what it needs: `uv sync --group backend`, etc.
+# Add a library to your area with: uv add --group <area> <package>
+[dependency-groups]
+dev = [
+    "pre-commit>=4.0",
+    "pytest>=8.3",
+    "ruff>=0.8",
+]
+backend = [
+    "fastapi>=0.115",
+    "httpx2>=2.16.2",
+    "uvicorn[standard]>=0.32",
+]
+frontend = [
+    "streamlit>=1.40",
+]
+
+[tool.uv]
+package = false
+default-groups = ["dev", "backend", "frontend"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py312"
+
+[tool.ruff.lint]
+# E/F: errors, I: import order, B: common bugs, UP: modern syntax, S: security
+select = ["E", "F", "I", "B", "UP", "S"]
+
+[tool.ruff.lint.per-file-ignores]
+"**/tests/**" = ["S101"]  # assert is fine in tests
+
+[tool.pytest.ini_options]
+pythonpath = ["."]
+testpaths = ["backend", "rag", "llm", "digest", "qa", "library"]

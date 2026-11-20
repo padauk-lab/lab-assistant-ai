@@ -12,6 +12,8 @@
 - [ ] No secrets, passwords or API keys in the code
 - [ ] No real student data (fake data only)
 - [ ] Does not change `docs/api.md`, or the project manager agreed to the change
+- [ ] Added or updated tests
+- [ ] `uv run pre-commit run --all-files` and `uv run pytest` pass locally
 - [ ] Tested it myself (say how below)
 
 ## How I tested it
