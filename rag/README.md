@@ -2,7 +2,7 @@
 
 Retrieval: turns school guidelines, policies, timetables and library PDFs into searchable chunks.
 
-**Owner:** AI group (LMHP, SWYG, KZN)
+**Owner:** Agent Engineering (LMHP, SWYH)
 
 ## What goes here
 

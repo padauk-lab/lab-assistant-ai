@@ -1,8 +1,8 @@
 # llm/
 
-The chat brain. Runs an open model locally with Ollama and answers using tools.
+The chat brain. Runs an open model locally (starting choice: Ollama) and answers using tools.
 
-**Owner:** AI group (LMHP, SWYG, KZN)
+**Owner:** Agent Engineering (LMHP, SWYH)
 
 ## What goes here
 

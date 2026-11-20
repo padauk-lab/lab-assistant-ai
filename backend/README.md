@@ -2,7 +2,7 @@
 
 The API server. Every other part (frontend, chat, Monday email) talks to the database only through this API.
 
-**Owner:** Data group (ANK, TDS)
+**Owner:** Infrastructure & System Engineering (ANK, TDS, KZN)
 
 ## What goes here
 

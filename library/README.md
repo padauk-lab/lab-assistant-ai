@@ -2,7 +2,7 @@
 
 Ebook library helpers. Files live in a shared Google Drive folder, the database stores only info and links.
 
-**Owner:** AI group (LMHP, SWYG, KZN)
+**Owner:** Agent Engineering (LMHP, SWYH)
 
 ## What goes here
 

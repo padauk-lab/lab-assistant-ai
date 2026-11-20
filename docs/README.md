@@ -7,5 +7,5 @@ Shared design documents: the table definitions (`tables.md`), the API list (`api
 ## What goes here
 
 - `PROJECT_BRIEF.md` is the full project briefing
-- `api.md` is the contract between the two groups. Any change goes through the project manager
+- `api.md` is the contract between the two teams. Any change goes through the project manager
 - `images/` holds screenshots and diagrams for the README
